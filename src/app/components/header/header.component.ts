@@ -24,7 +24,8 @@ export class HeaderComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.todoCreateForm = this._fb.group({
       title: ['', Validators.required],
-      id: []
+      id: [],
+      status: [false]
     });
     this.searchForm = this._fb.group({
       term: []

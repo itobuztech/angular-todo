@@ -30,4 +30,9 @@ export class ListComponent implements OnInit {
     this.onEdit.emit(id);
   }
 
+  changeStatus(status, todo: TODO) {
+    todo.status = status;
+    this._td.put(todo);
+  }
+
 }
