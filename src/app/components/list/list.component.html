@@ -1,5 +1,5 @@
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let todo of todos; let i = index">
+  <li class="list-group-item" *ngFor="let todo of todos | search:searchterm">
     <input type="checkbox" [ngModel]="todo?.status" [checked]="todo?.status" (ngModelChange)="changeStatus($event, todo)">
     {{todo?.title}} 
     <button class="btn btn-sm" (click)="delete(todo?.id)">Delete</button>

@@ -7,12 +7,14 @@ import { HeaderComponent } from './components/header/header.component';
 import { ListComponent } from './components/list/list.component';
 
 import { TodoService } from './services/todo.service';
+import { SearchPipe } from './pipes/search.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ListComponent
+    ListComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,

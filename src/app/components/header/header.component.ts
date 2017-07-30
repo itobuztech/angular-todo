@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   todoCreateForm: FormGroup;
   searchForm: FormGroup;
+  @Output() onSearch: EventEmitter<string> = new EventEmitter();
 
   constructor(
     private _fb: FormBuilder,
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.searchForm.valueChanges
       .debounceTime(400)
       .subscribe(res => {
-      this.search();
+        this.search();
     });
   }
 
@@ -58,6 +59,7 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   search() {
     console.log('search term:', this.searchForm.value);
+    this.onSearch.emit(this.searchForm.value.term);
   }
 
 }

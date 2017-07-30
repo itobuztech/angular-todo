@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { TODO } from '../../interface/todo.interface';
 
@@ -10,6 +10,7 @@ import { TODO } from '../../interface/todo.interface';
 })
 export class ListComponent implements OnInit {
   todos: Array<TODO>;
+  @Input() searchterm: string;
   @Output() onEdit: EventEmitter<number> = new EventEmitter();
 
   constructor(
