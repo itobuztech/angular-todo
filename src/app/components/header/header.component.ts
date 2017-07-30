@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 
+import { TodoService } from '../../services/todo.service';
+
+
 @Component({
   selector: 'todo-header',
   templateUrl: './header.component.html',
@@ -12,7 +15,8 @@ export class HeaderComponent implements OnInit {
   searchForm: FormGroup;
 
   constructor(
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _td: TodoService
   ) { }
 
   ngOnInit() {
@@ -33,6 +37,10 @@ export class HeaderComponent implements OnInit {
 
   add() {
     console.log('New todo data: ', this.todoCreateForm.value);
+    this._td.create(this.todoCreateForm.value);
+    this.todoCreateForm.patchValue({
+      title: []
+    });
   }
 
   search() {

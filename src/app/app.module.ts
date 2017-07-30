@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { ListComponent } from './list/list.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ListComponent } from './components/list/list.component';
+
+import { TodoService } from './services/todo.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { ListComponent } from './list/list.component';
     BrowserModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    TodoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
