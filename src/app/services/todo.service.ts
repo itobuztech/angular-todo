@@ -10,19 +10,30 @@ export class TodoService {
 
 
   constructor() {
-    this.getTodos();
+    this.setTodos();
+  }
+
+  updateStore(todos) {
+    this._todos$.next(todos);
+    localStorage.setItem('todoApp_list', JSON.stringify(todos));
   }
 
   create(todo: TODO) {
     const todos = this._todos$.getValue();
     todo.id = new Date().getTime();
     todos.push(todo);
-    localStorage.setItem('todoApp_list', JSON.stringify(todos));
-    this._todos$.next(todos);
+    this.updateStore(todos);
   }
 
-  getTodos() {
-    const todos = localStorage.getItem('todoApp_list')? JSON.parse(localStorage.getItem('todoApp_list')) : [];
+  put(todo: TODO) {
+    const todos = this._todos$.getValue();
+    const index = todos.findIndex(item => item.id === todo.id);
+    todos[index] = todo;
+    this.updateStore(todos);
+  }
+
+  setTodos() {
+    const todos = localStorage.getItem('todoApp_list') ? JSON.parse(localStorage.getItem('todoApp_list')) : [];
     this._todos$.next(todos);
   }
 
@@ -30,6 +41,12 @@ export class TodoService {
     const todos = this._todos$.getValue();
     const index = todos.findIndex(item => item.id === id);
     todos.splice(index, 1);
-    this._todos$.next(todos);
+    this.updateStore(todos);
+  }
+
+  getTodo(id) {
+    const todos = this._todos$.getValue();
+    const index = todos.findIndex(item => item.id === id);
+    return todos[index];
   }
 }

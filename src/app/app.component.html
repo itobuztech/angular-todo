@@ -1,8 +1,9 @@
 <div class="container"> 
   <div class="jumbotron">
     <h1>Angular Todo App</h1>
+    <p>Due: 10, Complete: 12, Total: 22</p>
   </div>
-  <todo-header></todo-header>
-  <todo-list></todo-list>
+  <todo-header [editIndex]="editIndex"></todo-header>
+  <todo-list (onEdit)="editIndex = $event"></todo-list>
 
 </div>

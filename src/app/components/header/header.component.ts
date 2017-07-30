@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 
@@ -10,7 +10,9 @@ import { TodoService } from '../../services/todo.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnChanges {
+  @Input() editIndex;
+
   todoCreateForm: FormGroup;
   searchForm: FormGroup;
 
@@ -21,7 +23,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.todoCreateForm = this._fb.group({
-      title: ['', Validators.required]
+      title: ['', Validators.required],
+      id: []
     });
     this.searchForm = this._fb.group({
       term: []
@@ -35,12 +38,21 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.editIndex.firstChange) {
+      const todo = this._td.getTodo(changes.editIndex.currentValue);
+      this.todoCreateForm.patchValue(todo);
+    }
+  }
+
   add() {
     console.log('New todo data: ', this.todoCreateForm.value);
-    this._td.create(this.todoCreateForm.value);
-    this.todoCreateForm.patchValue({
-      title: []
-    });
+    if (this.todoCreateForm.value.id) {
+      this._td.put(this.todoCreateForm.value);
+    }else {
+      this._td.create(this.todoCreateForm.value);
+    }
+    this.todoCreateForm.reset();
   }
 
   search() {

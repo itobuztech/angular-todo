@@ -1,5 +1,6 @@
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let todo of todos">{{todo?.title}} 
     <button class="btn btn-sm" (click)="delete(todo?.id)">Delete</button>
+    <button class="btn btn-sm" (click)="edit(todo?.id)">Edit</button>
   </li>
 </ul>
