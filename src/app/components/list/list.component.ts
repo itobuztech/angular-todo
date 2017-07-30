@@ -18,7 +18,11 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this._td.todos.subscribe(todos => {
       this.todos = todos;
-    })
+    });
+  }
+
+  delete(id) {
+    this._td.delete(id);
   }
 
 }

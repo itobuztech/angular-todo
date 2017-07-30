@@ -9,17 +9,27 @@ export class TodoService {
   todos = this._todos$.asObservable();
 
 
-  constructor() { }
+  constructor() {
+    this.getTodos();
+  }
 
   create(todo: TODO) {
-    const todos = this.getTodos();
+    const todos = this._todos$.getValue();
+    todo.id = new Date().getTime();
     todos.push(todo);
     localStorage.setItem('todoApp_list', JSON.stringify(todos));
     this._todos$.next(todos);
   }
 
   getTodos() {
-    return this._todos$.getValue();
+    const todos = localStorage.getItem('todoApp_list')? JSON.parse(localStorage.getItem('todoApp_list')) : [];
+    this._todos$.next(todos);
   }
 
+  delete(id) {
+    const todos = this._todos$.getValue();
+    const index = todos.findIndex(item => item.id === id);
+    todos.splice(index, 1);
+    this._todos$.next(todos);
+  }
 }

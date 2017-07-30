@@ -1,3 +1,5 @@
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let todo of todos">{{todo.title}}</li>
+  <li class="list-group-item" *ngFor="let todo of todos">{{todo?.title}} 
+    <button class="btn btn-sm" (click)="delete(todo?.id)">Delete</button>
+  </li>
 </ul>
