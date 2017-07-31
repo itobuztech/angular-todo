@@ -7,15 +7,35 @@ import { TODO } from '../interface/todo.interface';
 export class TodoService {
   private _todos$: BehaviorSubject<Array<TODO>> = new BehaviorSubject([]);
   todos = this._todos$.asObservable();
+  private _report$: BehaviorSubject<Object> = new BehaviorSubject({});
+  report = this._report$.asObservable();
 
 
   constructor() {
     this.setTodos();
+    this.makeReport(this._todos$.getValue());
+  }
+
+  makeReport(todos) {
+    const report = {
+      completed: 0,
+      pending: 0,
+      total: todos.length
+    };
+    todos.map(item => {
+      if (item.status) {
+        report.completed = report.completed + 1;
+      }else {
+        report.pending = report.pending + 1;
+      }
+    });
+    this._report$.next(report);
   }
 
   updateStore(todos) {
     this._todos$.next(todos);
     localStorage.setItem('todoApp_list', JSON.stringify(todos));
+    this.makeReport(todos);
   }
 
   create(todo: TODO) {
