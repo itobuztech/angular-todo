@@ -1,3 +1,9 @@
-<p>
-  details works!
-</p>
+<form [formGroup]="todoForm" (ngSubmit)="update()">
+  <div class="form-group">
+    <label>Title</label>
+    <input type="text" class="form-control" formControlName="title">
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary">Save</button>
+  </div>
+</form>

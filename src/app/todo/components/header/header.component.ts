@@ -48,11 +48,7 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   add() {
     console.log('New todo data: ', this.todoCreateForm.value);
-    if (this.todoCreateForm.value.id) {
-      this._td.put(this.todoCreateForm.value);
-    }else {
-      this._td.create(this.todoCreateForm.value);
-    }
+    this._td.create(this.todoCreateForm.value);
     this.todoCreateForm.reset();
   }
 

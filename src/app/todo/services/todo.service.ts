@@ -68,7 +68,7 @@ export class TodoService {
     this.updateStore(todos);
   }
 
-  getTodo(id) {
+  getTodo(id: number) {
     const todos = this._todos$.getValue();
     const index = todos.findIndex(item => item.id === id);
     return todos[index];

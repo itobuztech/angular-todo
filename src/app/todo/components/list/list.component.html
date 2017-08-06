@@ -3,6 +3,6 @@
     <input type="checkbox" [ngModel]="todo?.status" [checked]="todo?.status" (ngModelChange)="changeStatus($event, todo)">
     {{todo?.title}} 
     <button class="btn btn-sm" (click)="delete(todo?.id)">Delete</button>
-    <button class="btn btn-sm" (click)="edit(todo?.id)" [routerLink]="['/todos', todo?.id]">Edit</button>
+    <button class="btn btn-sm" [routerLink]="['/todos', todo?.id]">Edit</button>
   </li>
 </ul>

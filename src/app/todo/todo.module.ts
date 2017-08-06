@@ -14,7 +14,8 @@ const todoRoutes: Routes = [
   { path: '', component: TodoComponent ,
   children: [
     {path: 'list', component: ListComponent},
-    {path: ':id', component: DetailsComponent}
+    {path: ':id', component: DetailsComponent},
+    {path: '', redirectTo: 'list'}
   ]
 }
 ];

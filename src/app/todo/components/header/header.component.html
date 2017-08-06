@@ -4,8 +4,7 @@
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Add todo" formControlName="title">
       </div>
-      <button class="btn btn-primary" *ngIf="todoCreateForm.get('id').value">Update</button>
-      <button class="btn btn-primary" *ngIf="!todoCreateForm.get('id').value">Create</button>
+      <button class="btn btn-primary">Create</button>
     </form>
   </div>
   <div class="col-md-3 offset-5">
