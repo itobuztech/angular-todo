@@ -1,28 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { ListComponent } from './components/list/list.component';
+import { ShareModule } from './share/share.module';
+import { NotfoundComponent } from './notfound/notfound.component';
 
-import { TodoService } from './services/todo.service';
-import { SearchPipe } from './pipes/search.pipe';
+const appRoutes: Routes = [
+  { path: 'todos', loadChildren: 'app/todo/todo.module#TodoModule' },
+  { path: '',
+    redirectTo: '/todos',
+    pathMatch: 'full'
+  },
+  { path: '**', component: NotfoundComponent }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    ListComponent,
-    SearchPipe
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
-  providers: [
-    TodoService
+    RouterModule.forRoot(
+      appRoutes,
+      // { enableTracing: true } // <-- debugging purposes only
+    )
   ],
   bootstrap: [AppComponent]
 })

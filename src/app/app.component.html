@@ -1,9 +1,1 @@
-<div class="container"> 
-  <div class="jumbotron">
-    <h1>Angular Todo App</h1>
-    <p>Due: {{report?.pending}}, Complete: {{report?.completed}}, Total: {{report?.total}}</p>
-  </div>
-  <todo-header [editIndex]="editIndex" (onSearch)="searchterm = $event"></todo-header>
-  <todo-list (onEdit)="editIndex = $event" [searchterm]="searchterm"></todo-list>
-
-</div>
+<router-outlet></router-outlet>
