@@ -10,8 +10,7 @@ import { TODO } from '../../interface/todo.interface';
 })
 export class ListComponent implements OnInit {
   todos: Array<TODO>;
-  @Input() searchterm: string;
-  @Output() onEdit: EventEmitter<number> = new EventEmitter();
+  searchterm: string;
 
   constructor(
     private _td: TodoService
@@ -21,14 +20,15 @@ export class ListComponent implements OnInit {
     this._td.todos.subscribe(todos => {
       this.todos = todos;
     });
+    this._td.search
+    .debounceTime(500)
+    .subscribe(term => {
+      this.searchterm = term;
+    });
   }
 
   delete(id) {
     this._td.delete(id);
-  }
-
-  edit(id) {
-    this.onEdit.emit(id);
   }
 
   changeStatus(status, todo: TODO) {

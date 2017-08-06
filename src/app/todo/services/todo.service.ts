@@ -7,8 +7,12 @@ import { TODO } from '../interface/todo.interface';
 export class TodoService {
   private _todos$: BehaviorSubject<Array<TODO>> = new BehaviorSubject([]);
   todos = this._todos$.asObservable();
+
   private _report$: BehaviorSubject<Object> = new BehaviorSubject({});
   report = this._report$.asObservable();
+
+  private _search$: BehaviorSubject<string> = new BehaviorSubject(null);
+  search = this._search$.asObservable();
 
 
   constructor() {
@@ -68,5 +72,9 @@ export class TodoService {
     const todos = this._todos$.getValue();
     const index = todos.findIndex(item => item.id === id);
     return todos[index];
+  }
+
+  doSearch(searchTerm) {
+    this._search$.next(searchTerm);
   }
 }

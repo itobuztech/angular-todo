@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   todoCreateForm: FormGroup;
   searchForm: FormGroup;
-  @Output() onSearch: EventEmitter<string> = new EventEmitter();
 
   constructor(
     private _fb: FormBuilder,
@@ -59,7 +58,7 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   search() {
     console.log('search term:', this.searchForm.value);
-    this.onSearch.emit(this.searchForm.value.term);
+    this._td.doSearch(this.searchForm.controls['term'].value);
   }
 
 }
