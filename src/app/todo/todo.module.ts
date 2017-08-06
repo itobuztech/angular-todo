@@ -6,12 +6,17 @@ import { ShareModule } from '../share/share.module';
 import { TodoComponent } from './todo/todo.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ListComponent } from './components/list/list.component';
-
-import { TodoService } from './services/todo.service';
+import { DetailsComponent } from './details/details.component';
 import { SearchPipe } from './pipes/search.pipe';
+import { TodoService } from './services/todo.service';
 
 const todoRoutes: Routes = [
-  { path: '', component: TodoComponent }
+  { path: '', component: TodoComponent ,
+  children: [
+    {path: 'list', component: ListComponent},
+    {path: ':id', component: DetailsComponent}
+  ]
+}
 ];
 
 @NgModule({
@@ -26,7 +31,8 @@ const todoRoutes: Routes = [
     TodoComponent,
     HeaderComponent,
     ListComponent,
-    SearchPipe
+    SearchPipe,
+    DetailsComponent
   ],
   providers: [
     TodoService
