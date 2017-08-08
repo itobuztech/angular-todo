@@ -23,13 +23,13 @@ export class TodoService {
     private _http: Http
   ) {
     this.getAll().subscribe();
-    this.makeReport(this._todos$.getValue());
   }
 
   getAll() {
     return this._http.get('/todo')
       .map(todos => {
         this._todos$.next(todos.json());
+        this.makeReport(this._todos$.getValue());
         return todos.json();
       })
       .catch(err => Observable.throw(err));
