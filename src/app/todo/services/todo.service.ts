@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import { TODO } from '../interface/todo.interface';
 
@@ -15,9 +19,20 @@ export class TodoService {
   search = this._search$.asObservable();
 
 
-  constructor() {
-    this.setTodos();
+  constructor(
+    private _http: Http
+  ) {
+    this.getAll().subscribe();
     this.makeReport(this._todos$.getValue());
+  }
+
+  getAll() {
+    return this._http.get('/todo')
+      .map(todos => {
+        this._todos$.next(todos.json());
+        return todos.json();
+      })
+      .catch(err => Observable.throw(err));
   }
 
   makeReport(todos) {
@@ -29,7 +44,7 @@ export class TodoService {
     todos.map(item => {
       if (item.status) {
         report.completed = report.completed + 1;
-      }else {
+      } else {
         report.pending = report.pending + 1;
       }
     });
@@ -38,40 +53,48 @@ export class TodoService {
 
   updateStore(todos) {
     this._todos$.next(todos);
-    localStorage.setItem('todoApp_list', JSON.stringify(todos));
     this.makeReport(todos);
   }
 
   create(todo: TODO) {
-    const todos = this._todos$.getValue();
-    todo.id = new Date().getTime();
-    todos.push(todo);
-    this.updateStore(todos);
+    return this._http.post('/todo/', todo)
+      .map(res => {
+        const todos = this._todos$.getValue();
+        todos.push(res.json());
+        this.updateStore(todos);
+        return res.json();
+      })
+      .catch(err => Observable.throw(err));
   }
 
   put(todo: TODO) {
-    const todos = this._todos$.getValue();
-    const index = todos.findIndex(item => item.id === todo.id);
-    todos[index] = todo;
-    this.updateStore(todos);
-  }
-
-  setTodos() {
-    const todos = localStorage.getItem('todoApp_list') ? JSON.parse(localStorage.getItem('todoApp_list')) : [];
-    this._todos$.next(todos);
+    return this._http.put(`/todo/${todo.id}`, todo)
+      .map(res => {
+        const todos = this._todos$.getValue();
+        const index = todos.findIndex(item => item.id === todo.id);
+        todos[index] = todo;
+        this.updateStore(todos);
+        return res.json();
+      })
+      .catch(err => Observable.throw(err));
   }
 
   delete(id) {
-    const todos = this._todos$.getValue();
-    const index = todos.findIndex(item => item.id === id);
-    todos.splice(index, 1);
-    this.updateStore(todos);
+    return this._http.delete(`/todo/${id}`)
+      .map(todo => {
+        const todos = this._todos$.getValue();
+        const index = todos.findIndex(item => item.id === id);
+        todos.splice(index, 1);
+        this.updateStore(todos);
+        return todo.json();
+      })
+      .catch(err => Observable.throw(err));
   }
 
   getTodo(id: number) {
-    const todos = this._todos$.getValue();
-    const index = todos.findIndex(item => item.id === id);
-    return todos[index];
+    return this._http.get('/todo/' + id)
+      .map(todo => todo.json())
+      .catch(err => Observable.throw(err));
   }
 
   doSearch(searchTerm) {

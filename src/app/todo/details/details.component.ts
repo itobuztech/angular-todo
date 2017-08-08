@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoService } from '../services/todo.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'todo-details',
@@ -11,6 +13,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class DetailsComponent implements OnInit {
   todo;
   todoForm: FormGroup;
+  id: number;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -26,13 +29,12 @@ export class DetailsComponent implements OnInit {
       status: []
     });
 
-    this._activatedRoute.params.subscribe(params => {
-      if (params.id) {
-        this.todo = this._td.getTodo(+params.id);
-        console.log(this.todo);
-        this.todoForm.patchValue(this.todo);
-      }
-    });
+    this._activatedRoute.params
+      .switchMap(params => this._td.getTodo(params.id))
+      .subscribe(todo => {
+        console.log('Todo item', todo);
+        this.todoForm.patchValue(todo);
+      });
   }
 
   update() {
