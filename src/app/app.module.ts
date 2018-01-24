@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { ShareModule } from './share/share.module';
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
     NotfoundComponent
   ],
   imports: [
+    HttpModule,
     BrowserModule,
     RouterModule.forRoot(
       appRoutes,

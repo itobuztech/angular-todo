@@ -6,6 +6,7 @@ import {
   async
 } from '@angular/core/testing';
 import { MockBackend } from '@angular/http/testing';
+import { HttpClient } from '@angular/common/http';
 import {
   Http,
   HttpModule,
@@ -13,13 +14,16 @@ import {
   ConnectionBackend,
   BaseRequestOptions,
   Response,
-  ResponseOptions
+  ResponseOptions,
+  RequestMethod
 } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 // import 'rxjs/add/operator/next';
 
 import { TodoService } from './todo.service';
+import { HeaderComponent } from '../../todo/components/header/header.component';
+
 
 
 describe('MockBackend: TodoService', () => {
@@ -40,7 +44,7 @@ describe('MockBackend: TodoService', () => {
     mockbackend = _mockbackend;
   }));
 
-  //specs
+  // specs
   it('should return mocked Id response', () => {
     const response = [3, 4];
     mockbackend.connections.subscribe(connection => {
@@ -54,6 +58,23 @@ describe('MockBackend: TodoService', () => {
       expect(id.length).toBe(2);
     });
   });
+
+  // specs
+  it('performs a POST', async(() => {
+    const response = ['id', 'title', 'status'];
+    mockbackend.connections.subscribe(c => {
+    expect(c.request.url) .toBe('/todo/');
+    expect(c.request.method).toBe(RequestMethod.Post);
+    c.mockRespond(new Response(new ResponseOptions({
+      body: JSON.stringify(response)
+    })));
+    });
+    service.create().subscribe(res => {
+      expect(res).toContain('id');
+      expect(res).toContain('title');
+      expect(res).toContain('status');
+    });
+  }));
 });
 
 describe('Observable: search data', () => {

@@ -3,6 +3,7 @@
     <form class="form-inline" [formGroup]="todoCreateForm" (ngSubmit)="add()">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Add todo" formControlName="title">
+        <p *ngIf="!todoCreateForm.get('title').valid && todoCreateForm.get('title').touched" class="asd">Field can't be blank</p>
       </div>
       <button class="btn btn-primary">Create</button>
     </form>
