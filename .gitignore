@@ -1,8 +1,5 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-#documentation
-/documentation
-
 # Backstop 
 backstop_data/bitmaps_test
 backstop_data/html_report
