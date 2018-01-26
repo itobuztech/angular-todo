@@ -56,6 +56,10 @@ export class TodoService {
     this.makeReport(todos);
   }
 
+  /**
+   * Create Todo
+   * @param todo
+   */
   create(todo: TODO) {
     return this._http.post('/todo/', todo)
       .map(res => {
@@ -67,6 +71,10 @@ export class TodoService {
       .catch(err => Observable.throw(err));
   }
 
+  /**
+   * Update todo
+   * @param todo
+   */
   put(todo: TODO) {
     return this._http.put(`/todo/${todo.id}`, todo)
       .map(res => {
@@ -79,7 +87,10 @@ export class TodoService {
       .catch(err => Observable.throw(err));
   }
 
-  delete(id) {
+  /**
+   * Delete todo By id
+   */
+  delete(id): Observable<TODO> {
     return this._http.delete(`/todo/${id}`)
       .map(todo => {
         const todos = this._todos$.getValue();
@@ -91,7 +102,10 @@ export class TodoService {
       .catch(err => Observable.throw(err));
   }
 
-  getTodo(id: number) {
+  /**
+   * Get todo By Id
+   */
+  getTodo(id: number): Observable<TODO> {
     return this._http.get('/todo/' + id)
       .map(todo => todo.json())
       .catch(err => Observable.throw(err));
