@@ -578,12 +578,14 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/todo/services/todo.service.ts:59</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/todo/services/todo.service.ts:63</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>Create Todo</p>
+            </div>
             
                                         <div class="io-description">
                                                 <b>Parameters :</b>
@@ -644,12 +646,14 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/todo/services/todo.service.ts:82</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">src/app/todo/services/todo.service.ts:93</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>Delete todo By id</p>
+            </div>
             
                                         <div class="io-description">
                                                 <b>Parameters :</b>
@@ -677,7 +681,7 @@
                                         <div>
                                         </div>
                                         <div class="io-description">
-                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            <b>Returns : </b>    <code><a href="../interfaces/TODO.html" target="_self" >Observable&lt;TODO&gt;</a></code>
             
                                         </div>
                                             <div class="io-description">
@@ -709,7 +713,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="104" class="link-to-prism">src/app/todo/services/todo.service.ts:104</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">src/app/todo/services/todo.service.ts:114</a></div>
                                         </td>
                                     </tr>
             
@@ -811,14 +815,13 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">src/app/todo/services/todo.service.ts:98</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">src/app/todo/services/todo.service.ts:108</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
-                                        <div class="io-description"><p>Get todo By Id
-            Return Value todo: TODO</p>
+                                        <div class="io-description"><p>Get todo By Id</p>
             </div>
             
                                         <div class="io-description">
@@ -945,12 +948,14 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/todo/services/todo.service.ts:70</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/todo/services/todo.service.ts:78</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>Update todo</p>
+            </div>
             
                                         <div class="io-description">
                                                 <b>Parameters :</b>
@@ -1344,6 +1349,10 @@ export class TodoService {
     this.makeReport(todos);
   }
 
+  /**
+   * Create Todo
+   * @param todo
+   */
   create(todo: TODO) {
     return this._http.post(&#x27;/todo/&#x27;, todo)
       .map(res &#x3D;&gt; {
@@ -1355,6 +1364,10 @@ export class TodoService {
       .catch(err &#x3D;&gt; Observable.throw(err));
   }
 
+  /**
+   * Update todo
+   * @param todo
+   */
   put(todo: TODO) {
     return this._http.put(&#x60;/todo/${todo.id}&#x60;, todo)
       .map(res &#x3D;&gt; {
@@ -1367,7 +1380,10 @@ export class TodoService {
       .catch(err &#x3D;&gt; Observable.throw(err));
   }
 
-  delete(id) {
+  /**
+   * Delete todo By id
+   */
+  delete(id): Observable&lt;TODO&gt; {
     return this._http.delete(&#x60;/todo/${id}&#x60;)
       .map(todo &#x3D;&gt; {
         const todos &#x3D; this._todos$.getValue();
@@ -1381,7 +1397,6 @@ export class TodoService {
 
   /**
    * Get todo By Id
-   * Return Value todo: TODO
    */
   getTodo(id: number): Observable&lt;TODO&gt; {
     return this._http.get(&#x27;/todo/&#x27; + id)

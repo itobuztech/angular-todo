@@ -14,7 +14,7 @@
     "approve": "backstop approve",
     "css:test": "backstop test",
     "init": "backstop init",
-    "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json"
+    "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json -d docs"
   },
   "private": true,
   "dependencies": {
