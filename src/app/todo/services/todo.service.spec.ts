@@ -28,6 +28,8 @@ import { HeaderComponent } from '../../todo/components/header/header.component';
 
 describe('MockBackend: TodoService', () => {
   let mockbackend, service;
+  let search$;
+  let searchTerm: any;
 
   //setup
   beforeEach(() => {
@@ -75,19 +77,38 @@ describe('MockBackend: TodoService', () => {
       expect(res).toContain('status');
     });
   }));
-});
 
-describe('Observable: search data', () => {
-  let search$;
+  // specs
+  it('performs a DELETE', async(() => {
+    const response = ['id', 'createdAt', 'title', 'status'];
+    let id: number;
+    mockbackend.connections.subscribe(c => {
+      expect(c.request.url)
+      .toBe(`/todo/${id}`);
+      console.log(c.request.url);
+      expect(c.request.method).toBe(RequestMethod.Delete);
+      c.mockRespond(new Response(new ResponseOptions({
+        body: JSON.stringify(response)
+      })));
+    });
+    service.delete().subscribe(res => {
+      expect(res).toContain('id');
+      expect(res).toContain('createdAt');
+      expect(res).toContain('title');
+      expect(res).toContain('status');
+    });
+  }));
+
   beforeEach(() => {
     search$ = new Observable(observer => {
-      observer.next('need');
-      observer.next('title');
+      observer.next('task1');
+      observer.next('task2');
     });
-  })
-  // specs
+  });
+
+  // spec
   it('should create the expected search sequence', async(() => {
-    let expected = ['need', 'title'],
+    let expected = ['task1', 'task2'],
     index = 0;
     search$
       .subscribe({
@@ -96,6 +117,7 @@ describe('Observable: search data', () => {
       });
   }));
 });
+
 
 
 

@@ -9,10 +9,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 
 const appRoutes: Routes = [
   { path: 'todos', loadChildren: 'app/todo/todo.module#TodoModule' },
-  { path: '',
-    redirectTo: '/todos/list',
-    pathMatch: 'full'
-  },
+  { path: '', redirectTo: '/todos/list', pathMatch: 'full' },
   { path: '**', component: NotfoundComponent }
 ];
 
